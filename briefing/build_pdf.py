@@ -203,22 +203,24 @@ def build(spec, out):
         f.extend(signal_block(i, s))
 
     if spec.get("yc_watch"):
-        f.append(Paragraph("Y COMBINATOR LAUNCH WATCH", ST["h2"]))
+        head = Paragraph("Y COMBINATOR LAUNCH WATCH", ST["h2"])
         rows = [[Paragraph(f"<b>{link(r['company'], r.get('url'))}</b><br/>"
                            f"<font color='#5B6470' size='7.5'>{t(r.get('batch'))}</font>", ST["cell"]),
                  Paragraph(t(r.get("pitch")), ST["cell"]),
                  Paragraph(t(r.get("take")), ST["cell"])] for r in spec["yc_watch"]]
-        f.append(table(["Company", "What they're building", "Why it's a signal"], rows,
-                       [W * 0.2, W * 0.38, W * 0.42]))
+        # keep heading + table together so no orphaned rows dangle at a page foot
+        f.append(KeepTogether([head, table(["Company", "What they're building", "Why it's a signal"],
+                                           rows, [W * 0.2, W * 0.38, W * 0.42])]))
         f.append(Spacer(1, 6))
 
     if spec.get("hn_pulse"):
-        f.append(Paragraph("HACKER NEWS PULSE (LAST 24H)", ST["h2"]))
+        head = Paragraph("HACKER NEWS PULSE (LAST 24H)", ST["h2"])
         rows = [[Paragraph(f"<b>{t(r.get('points'))}</b><br/>"
                            f"<font color='#5B6470' size='7.5'>{t(r.get('comments'))} cmts</font>", ST["cell"]),
                  Paragraph(link(r["title"], r.get("url")), ST["cell_b"]),
                  Paragraph(t(r.get("note")), ST["cell"])] for r in spec["hn_pulse"]]
-        f.append(table(["Pts", "Story", "Read-through"], rows, [W * 0.09, W * 0.40, W * 0.51]))
+        f.append(KeepTogether([head, table(["Pts", "Story", "Read-through"], rows,
+                                           [W * 0.09, W * 0.40, W * 0.51])]))
         f.append(Spacer(1, 6))
 
     if spec.get("watch_next"):

@@ -27,7 +27,8 @@ briefing on emerging technology from Hacker News and Y Combinator.
    Use plain text in every field (no markdown), and date it in IST.
 
 4. **Render**
-   `python3 briefing/build_pdf.py $SCRATCH/briefing.json $SCRATCH/emerging-tech-YYYY-MM-DD.pdf`
+   `bash briefing/render.sh $SCRATCH/briefing.json $SCRATCH/emerging-tech-YYYY-MM-DD.pdf`
+   (`render.sh` finds a Python that has reportlab, or installs reportlab.)
    Exit code 2 means the PDF is not 2-3 pages. Trim or expand the content and
    re-run until it passes.
 
